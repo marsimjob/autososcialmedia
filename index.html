@@ -59,5 +59,54 @@ footer { text-align: center; padding: 20px; background: #e9eef6; margin-top: 40p
 <footer>
 © 2025 AutoSocial Media – Alla rättigheter förbehållna
 </footer>
+<!-- Chatbot Widget -->
+<div id="chatbot" style="position: fixed; bottom: 20px; right: 20px; width: 320px; background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); padding: 16px; font-family: Arial, sans-serif;">
+<h3 style="margin-top: 0;">🤖 AutoSocial Chatbot</h3>
+<div id="chatlog" style="height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 8px; border-radius: 8px; margin-bottom: 10px;"></div>
+<input id="chatInput" type="text" placeholder="Ställ en fråga..." style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #ccc;">
+</div>
+
+
+<script>
+const qa = {
+"vad erbjuder ni": "Vi erbjuder automatiserad innehållshantering, AI-skapade inlägg och full service för företag som vill växa på sociala medier.",
+"vad kostar det": "Vi erbjuder paket från 2999 kr/mån beroende på omfattning och tjänster.",
+"hur kontaktar jag er": "Du kan kontakta oss via kontaktformuläret på sidan eller maila support@autosocial.se.",
+"vad är autosocial": "AutoSocial är ett företag som automatiserar sociala medier, skapar innehåll och hjälper företag växa online.",
+"har ni kundsupport": "Ja! Vi erbjuder support 24/7 för våra premiumkunder.",
+"kan ni skapa content": "Ja, vi skapar reels, bilder, captions och planerar hela flödet automatiskt."
+};
+
+
+function chatbotAnswer(q) {
+q = q.toLowerCase();
+for (let key in qa) {
+if (q.includes(key)) return qa[key];
+}
+return "Jag är inte helt säker på det än, men vårt team hjälper dig gärna!";
+}
+
+
+document.getElementById('chatInput').addEventListener('keydown', function(e) {
+if (e.key === 'Enter') {
+const input = this.value;
+if (!input) return;
+
+
+const log = document.getElementById('chatlog');
+log.innerHTML += `<p><strong>Du:</strong> ${input}</p>`;
+const response = chatbotAnswer(input);
+log.innerHTML += `<p><strong>Bot:</strong> ${response}</p>`;
+log.scrollTop = log.scrollHeight;
+
+
+this.value = "";
+}
+});
+</script>
+
+
+</body>
+</html>
 </body>
 </html>
