@@ -1,110 +1,190 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AutoSocial Media</title>
-<style>
-body { font-family: Arial, sans-serif; margin: 0; background: #f5f7fa; color: #333; }
-header { background: #2b67f6; padding: 30px; color: white; text-align: center; }
-header img { width: 90px; margin-bottom: 10px; }
-.section { padding: 50px 20px; max-width: 900px; margin: auto; }
-h2 { color: #2b67f6; }
-.pricing { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
-.card { background: white; border-radius: 12px; padding: 25px; width: 260px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-.card h3 { margin-top: 0; color: #2b67f6; }
-.cta { text-align: center; margin-top: 40px; }
-.cta a { background: #2b67f6; padding: 15px 25px; color: white; border-radius: 8px; text-decoration: none; font-size: 18px; }
-footer { text-align: center; padding: 20px; background: #e9eef6; margin-top: 40px; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoSocial Media</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* Grundinställningar */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: linear-gradient(180deg, #0f0f0f, #1a1a1a); color: #e4e4e4; scroll-behavior: smooth; }
+    a { text-decoration: none; color: inherit; }
+
+    /* Header */
+    header { display: flex; justify-content: space-between; align-items: center; padding: 20px 60px; backdrop-filter: blur(12px); background: rgba(0,0,0,0.4); border-bottom: 1px solid rgba(255,255,255,0.1); position: sticky; top: 0; z-index: 100; }
+    header img { height: 60px; }
+    nav a { margin-left: 25px; font-weight: 500; transition: 0.3s; }
+    nav a:hover { color: #00e0ff; }
+
+    /* Hero */
+    .hero { text-align: center; padding: 160px 20px; background: url('hero.jpg') center/cover no-repeat fixed; color: white; text-shadow: 0 4px 30px rgba(0,0,0,0.5); position: relative; }
+    .hero h1 { font-size: 4rem; font-weight: 800; margin-bottom: 20px; }
+    .hero p { font-size: 1.5rem; opacity: 0.9; margin-bottom: 40px; }
+    .hero .cta { padding: 15px 35px; background: #00e0ff; color: #0f0f0f; font-weight: 700; border-radius: 12px; transition: 0.3s; }
+    .hero .cta:hover { background: #00c3d9; transform: scale(1.05); }
+
+    /* Hero subtil bakgrundsanimering */
+    .hero::before {
+      content:"";
+      position:absolute;
+      top:0; left:0; width:100%; height:100%;
+      background: radial-gradient(circle, rgba(0,224,255,0.1) 0%, transparent 80%);
+      animation: moveBg 20s linear infinite;
+      z-index:0;
+    }
+    .hero > * { position: relative; z-index:1; }
+    @keyframes moveBg { 
+      0% { transform:translateX(0) translateY(0); }
+      50% { transform:translateX(20px) translateY(20px); }
+      100% { transform:translateX(0) translateY(0); }
+    }
+
+    /* Sektioner */
+    .section { max-width: 1200px; margin: auto; padding: 80px 40px; }
+    .section h2 { font-size: 2.8rem; margin-bottom: 40px; color: #00e0ff; text-align: center; }
+
+    /* Kort/Grid */
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+    .card { background: rgba(255,255,255,0.05); padding: 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(8px); transition: 0.3s; text-align: center; }
+    .card:hover { transform: translateY(-5px); border-color: #00e0ff; }
+    .card img { width: 60px; margin-bottom: 20px; }
+    .card h3 { font-size: 1.6rem; margin-bottom: 15px; }
+    .card p { font-size: 1rem; opacity: 0.85; }
+
+    /* Priser */
+    .pricing { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+    .pricing .card { border: 2px solid rgba(0,224,255,0.5); transition: 0.3s; }
+    .pricing .card.popular { border-color: #00e0ff; background: rgba(0,224,255,0.1); }
+
+    /* Kundrecensioner */
+    .testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+    .testimonial { background: rgba(255,255,255,0.05); padding: 25px; border-radius: 15px; backdrop-filter: blur(6px); transition: 0.3s; }
+    .testimonial:hover { transform: translateY(-5px); border-color: #00e0ff; }
+
+    /* Footer */
+    footer { background: rgba(0,0,0,0.5); padding: 40px 60px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; }
+    footer a { color: #00e0ff; margin: 0 10px; transition: 0.3s; }
+    footer a:hover { color: #00c3d9; }
+
+    /* Chatbot */
+    #chatbot { position: fixed; bottom: 20px; right: 20px; background:#00e0ff; color:#0f0f0f; padding:15px; border-radius:50%; cursor:pointer; font-size:1.5rem; box-shadow:0 5px 15px rgba(0,224,255,0.4); transition:0.3s; }
+    #chatbot:hover { transform:scale(1.1); }
+
+    /* Animation */
+    .fade-in { opacity: 0; transform: translateY(20px); animation: fadeInUp 1s forwards; }
+    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+  </style>
 </head>
 <body>
+
 <header>
-<img src="data:image/png;base64,REPLACE_ME" alt="AutoSocial Media Logo">
-<h1>AutoSocial Media</h1>
-<p>Innehåll som skapar kunder – automatiserat med AI</p>
+  <img src="logo.png" alt="Logo">
+  <nav>
+    <a href="#features">Fördelar</a>
+    <a href="#pricing">Priser</a>
+    <a href="#testimonials">Recensioner</a>
+    <a href="#contact">Kontakt</a>
+  </nav>
 </header>
 
+<section class="hero">
+  <h1>Skapa produkter som verkligen engagerar</h1>
+  <p>Vi tar dina idéer till nästa nivå med stilren design och smarta lösningar</p>
+  <a href="#contact" class="cta">Boka möte</a>
+</section>
 
-<div class="section">
-<h2>Vad vi gör</h2>
-<p>Vi hjälper småföretag att växa genom att skapa och publicera professionellt innehåll med hjälp av AI. Ni slipper stressen med sociala medier – vi sköter allt åt er.</p>
-</div>
+<section id="features" class="section">
+  <h2>Varför välja oss?</h2>
+  <div class="card-grid">
+    <div class="card fade-in">
+      <img src="icon1.png" alt="">
+      <h3>Innovativ design</h3>
+      <p>Vi skapar produkter som sticker ut och fångar uppmärksamhet.</p>
+    </div>
+    <div class="card fade-in">
+      <img src="icon2.png" alt="">
+      <h3>Hög kvalitet</h3>
+      <p>Varje produkt är byggd med noggrant utvalda komponenter och lösningar.</p>
+    </div>
+    <div class="card fade-in">
+      <img src="icon3.png" alt="">
+      <h3>Snabb leverans</h3>
+      <p>Vi arbetar effektivt för att leverera resultat inom tidsramen.</p>
+    </div>
+  </div>
+</section>
 
+<section id="pricing" class="section">
+  <h2>Våra paket</h2>
+  <div class="pricing">
+    <div class="card fade-in">
+      <h3>Basic</h3>
+      <p>Grundläggande funktioner och stöd.</p>
+      <p><strong>€99 / månad</strong></p>
+    </div>
+    <div class="card popular fade-in">
+      <h3>Standard</h3>
+      <p>Full funktionalitet med premium-support.</p>
+      <p><strong>€199 / månad</strong></p>
+    </div>
+    <div class="card fade-in">
+      <h3>Premium</h3>
+      <p>Allt i Standard + skräddarsydda lösningar.</p>
+      <p><strong>€299 / månad</strong></p>
+    </div>
+  </div>
+</section>
 
-<div class="section">
-<h2>Våra paket</h2>
-<div class="pricing">
-<div class="card">
-<h3>Start – 2 500 kr/mån</h3>
-<p>✔ 8 inlägg/månad<br>✔ 1 video/vecka<br>✔ Automatiserad publicering</p>
-</div>
-<div class="card">
-<h3>Pro – 4 900 kr/mån</h3>
-<p>✔ 12–16 inlägg/månad<br>✔ 2–4 videos/vecka<br>✔ Månatlig innehållsplan<br>✔ Optimering</p>
-</div>
-<div class="card">
-<h3>Premium – 8 900 kr/mån</h3>
-<p>✔ 4–8 videos/vecka<br>✔ Obegränsat antal inlägg<br>✔ Full strategi<br>✔ Prioriterad support</p>
-</div>
-</div>
-</div>
+<section id="testimonials" class="section">
+  <h2>Kundrecensioner</h2>
+  <div class="testimonials">
+    <div class="testimonial fade-in">
+      <p>“Otrolig service och fantastiska produkter – rekommenderas varmt!”</p>
+      <strong>- Anna S.</strong>
+    </div>
+    <div class="testimonial fade-in">
+      <p>“Proffsigt team som levererade mer än vi förväntade oss.”</p>
+      <strong>- Johan L.</strong>
+    </div>
+    <div class="testimonial fade-in">
+      <p>“Vi älskar designen och hur lätt allt fungerar.”</p>
+      <strong>- Maria K.</strong>
+    </div>
+  </div>
+</section>
 
-
-<div class="section cta">
-<a href="mailto:kontakt@autosocialmedia.se">Kontakta oss</a>
-</div>
-
-
-<footer>
-© 2025 AutoSocial Media – Alla rättigheter förbehållna
+<footer id="contact">
+  <p>Kontakt: info@autosocialmedia.com | +46 70 123 45 67</p>
+  <p>
+    <a href="#">LinkedIn</a> |
+    <a href="#">Twitter</a> |
+    <a href="#">Instagram</a>
+  </p>
+  <p>&copy; 2025 AutoSocial Media</p>
 </footer>
-<!-- Chatbot Widget -->
-<div id="chatbot" style="position: fixed; bottom: 20px; right: 20px; width: 320px; background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); padding: 16px; font-family: Arial, sans-serif;">
-<h3 style="margin-top: 0;">🤖 AutoSocial Chatbot</h3>
-<div id="chatlog" style="height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 8px; border-radius: 8px; margin-bottom: 10px;"></div>
-<input id="chatInput" type="text" placeholder="Ställ en fråga..." style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #ccc;">
-</div>
 
+<div id="chatbot">💬</div>
 
 <script>
-const qa = {
-"vad erbjuder ni": "Vi erbjuder automatiserad innehållshantering, AI‑skapade inlägg och full service för företag som vill växa på sociala medier.",
-"vad kostar det": "Vi erbjuder paket från 2999 kr/mån beroende på omfattning och tjänster.",
-"hur kontaktar jag er": "Du kan kontakta oss via kontaktformuläret på sidan eller maila support@autosocial.se.",
-"vad är autosocial": "AutoSocial är ett företag som automatiserar sociala medier, skapar innehåll och hjälper företag växa online.",
-"har ni kundsupport": "Ja! Vi erbjuder support 24/7 för våra premiumkunder.",
-"kan ni skapa content": "Ja, vi skapar reels, bilder, captions och planerar hela flödet automatiskt."
-};
+  // Scroll-animation för kort och testimonials
+  const cards = document.querySelectorAll('.fade-in, .testimonial');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) {
+        entry.target.style.opacity = 1;
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.2 });
+  cards.forEach(card => observer.observe(card));
 
-
-function chatbotAnswer(q) {
-q = q.toLowerCase();
-for (let key in qa) {
-if (q.includes(key)) return qa[key];
-}
-return "Jag är inte helt säker på det än, men vårt team hjälper dig gärna!";
-}
-
-
-document.getElementById('chatInput').addEventListener('keydown', function(e) {
-if (e.key === 'Enter') {
-const input = this.value;
-if (!input) return;
-
-
-const log = document.getElementById('chatlog');
-log.innerHTML += `<p><strong>Du:</strong> ${input}</p>`;
-const response = chatbotAnswer(input);
-log.innerHTML += `<p><strong>Bot:</strong> ${response}</p>`;
-log.scrollTop = log.scrollHeight;
-
-
-this.value = "";
-}
-});
+  // Enkel chatbot popup
+  const chatbot = document.getElementById('chatbot');
+  chatbot.addEventListener('click', () => {
+    alert('Hej! Hur kan vi hjälpa dig idag? 💬');
+  });
 </script>
-
 
 </body>
 </html>
