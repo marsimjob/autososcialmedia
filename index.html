@@ -52,7 +52,8 @@
 
         .logo-container img {
             height: 40px; /* Mindre logga i navbaren */
-            filter: drop-shadow(0 0 5px rgba(0, 224, 255, 0.5));
+            /* Applicerar en neon-liknande skugga för att matcha designen */
+            filter: drop-shadow(0 0 5px rgba(0, 224, 255, 0.5)); 
         }
 
         .logo-text h1 {
@@ -99,7 +100,7 @@
         .hero {
             text-align: center;
             padding: 180px 20px;
-            /* Simulera bakgrundsbilden */
+            /* Du måste ersätta 'hero-placeholder.jpg' med din egen bakgrundsbild. */
             background-color: var(--background-dark);
             background-image: linear-gradient(rgba(15, 15, 15, 0.7), rgba(15, 15, 15, 0.9)), url('hero-placeholder.jpg'); 
             background-size: cover;
@@ -118,6 +119,7 @@
             left: 0;
             right: 0;
             bottom: 0;
+            /* Ljusar upp i toppen och mörknar i botten för att matcha det mörka temat */
             background: linear-gradient(180deg, rgba(15, 15, 15, 0.1) 0%, rgba(15, 15, 15, 1) 100%);
             z-index: 1;
         }
@@ -301,7 +303,7 @@
             /* Använd samma knappstil som i hero-sektionen */
         }
         
-        /* Chatbot Overlay (Föredrar att behålla din stil för enkelhetens skull) */
+        /* Chatbot Overlay */
         #chatbot {
             position: fixed;
             bottom: 20px;
@@ -311,7 +313,8 @@
             backdrop-filter: blur(10px);
             padding: 20px;
             border-radius: 20px;
-            border: 1px solid var(--primary-color);
+            /* Matchar accentfärgen */
+            border: 1px solid var(--primary-color); 
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
             color: var(--text-light);
             font-family: 'Inter', sans-serif;
@@ -340,6 +343,11 @@
             margin: 5px 0;
             line-height: 1.4;
             opacity: 0.9;
+        }
+
+        #chatlog strong {
+            color: var(--primary-color);
+            font-weight: 600;
         }
 
         #chatInput {
@@ -383,7 +391,7 @@
 <body>
     <header>
         <div class="logo-container">
-            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzMiIGhlaWdodD0iNTYiIHZpZXdCb3g9IjAgMCA3MyA1NiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNNTQuOTg3MiAzNy43MjAzTDYyLjk1NTYgNDUuNjk2QzY0LjAzNTYgNDYuNzg2IDY1LjQwNTYgNDcuMzI1MyA2Ny4xNDk5IDQ3LjMyNTNDNjguOTAzOSA0Ny4zMjUzIDcwLjQ3NjYgNDYuODAzNiA3Mi4xMjkzIDQ1LjU5MzNMMzYuMjA2MyAwTDU0Ljk4NzIgMzcuNzIwM1oiIGZpbGw9IiMwMUUwRkYiLz4KICA8cGF0aCBkPSJNMzYgMTguNDQ2N0wwLjAyODE5NTcgNDYuOTc4QzEuNjQxMjUgNDguMDYzNSA0LjI3ODEzIDQ4LjYyMjggNi4wNDM0MiA0OC42MjI4QzcuODA4NzEgNDguNjIyOCA5LjQyOTQ4IDQ4LjA5MTUgMTEuMDQyNiA0Ni45Nzg0TDI2Ljk1MzMgMzEuMDQ2N0wzNiAxOC40NDY3WiIgZmlsbD0iIzAwRTBGRiIvPgogIDxwYXRoIGQ9Ik0xMS41ODYyIDM1LjY1MzRMMC4wMjgwMTA1IDQ3LjEyMzJDMi41MTI4NyA1My4yMjEgOS45NzA4NyA1NS43MTI2IDE4LjI5NTggNTUuNzEyNkM0MS4wNTgxIDU1LjcxMjYgNjUuNzA0OSA0MS4yODUyIDczLjAwODcgMzkuNDUwNUwzNiAxMC45NzY3TTE2LjIzMzMgMzkuNDYwN0wxOC43OTU4IDQxLjY0NjZDMjAuMjg2MiA0Mi42MjE5IDIyLjUzMTQgNDMuMTY2MyAyNC41NTI0IDQzLjE2NjNDMjguNjY5OSA0My4xNjYzIDMzLjE0NzUgNDAuMzg5OSAzNiAzNi44MzI1TDUwLjczMDggNDkuMzc3M0w1Ni42Nzg5IDU0LjQzMjdDMzMuNzQ1MiA0My45NjQ1IDE4Ljg2OTYgNDYuNjk5NSAxMS41ODYyIDM1LjY1MzRaIiBmaWxsPSIjRTRFNENGJi8+Cjwvc3ZnPg==" alt="AutoSocial Media Logo">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzMiIGhlaWdodD0iNTYiIHZpZXdCb3g9IjAgMCA3MyA1NiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNNTQuOTg3MiAzNy43MjAzTDYyLjk1NTYgNDUuNjk2QzY0LjAzNTYgNDYuNzg2IDY1LjQwNTYgNDcuMzI1MyA2Ny4xNDk5IDQ3LjMyNTNDNjguOTAzOSA0Ny4zMjUzIDcwLjQ3NjYgNDYuODAzNiA3Mi4xMjkzIDQ1LjU5MzNMMzYuMjA2MyAwTDU0Ljk4NzIgMzcuNzIwM1oiIGZpbGw9IiMwMUUwRkYiLz4KICA8cGF0aCBkPSJNMzYgMTguNDQ2N0wwLjAyODE5NTcgNDYuOTc4QzEuNjQxMjUgNDguMDYzNSA0LjI3ODEzIDQ4LjYyMjggNi4wNDM0MiA0OC42MjI4QzcuODA4NzEgNDguNjIyOCA5LjQyOTQ4IDQ4LjA5MTUgMTEuMDQyNiA0Ni45Nzg0TDI2Ljk1MzMgMzEuMDQ2N0wzNiAxOC40NDY3WiIgZmlsbD0iIzAwRTBGRiIvPgogIDxwYXRoIGQ9Ik0xMS41ODYyIDM1LjY1MzRMMC4wMjgwMTA1IDQ3LjEyMzJDMi41MTI4NyA1My4yMjEgOS45NzA4NyA1NS43MTI2IDE4LjI5NTggNTUuNzEyNkM0MS4wNTgxIDU1LjcxMjYgNjUuNzA0OSA0MS4yODUyIDczLjAwODcgMzkuNDUwNUwzNiAxMC45NzY3TTE2LjIzMzMgMzkuNDYwN0wxOC43OTU4IDQxLjY0NjZDMjAuMjg2MiA0Mi42MjE5IDIyLjUzMTQgNDMuMTY2MyAyNC41NTI0IDQzLjE2NjNDMjguNjY5OSA0My4xNjYzIDMzLjE0NzUgNDAuMzg5OSAzNiAzNi44MzI1TDUwLjczMDggNDkuMzc3M0w1Ni42Nzg5IDU0LjQzMjdDMzMuNzQ1MiA0My45NjQ1IDE4Ljg2OTYgNDYuNjk5NSAxMS41ODYyIDM1LjY1MzRaIiBmaWxsPSIjRTRFNENGIi8+Cjwvc3ZnPg==" alt="AutoSocial Media Logo">
             <div class="logo-text">
                 <h1>AutoSocial Media</h1>
                 <p>Innehåll som skapar kunder – automatiserat med AI.</p>
