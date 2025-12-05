@@ -1,190 +1,514 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AutoSocial Media</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <style>
-    /* Grundinställningar */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Inter', sans-serif; background: linear-gradient(180deg, #0f0f0f, #1a1a1a); color: #e4e4e4; scroll-behavior: smooth; }
-    a { text-decoration: none; color: inherit; }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AutoSocial Media – Innehåll som skapar kunder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* Globala Stilar */
+        :root {
+            --primary-color: #00e0ff; /* Starkt blå/cyan för accent */
+            --background-dark: #0f0f0f; /* Huvudbakgrund */
+            --background-mid: #1a1a1a; /* Section bakgrund */
+            --text-light: #e4e4e4;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
 
-    /* Header */
-    header { display: flex; justify-content: space-between; align-items: center; padding: 20px 60px; backdrop-filter: blur(12px); background: rgba(0,0,0,0.4); border-bottom: 1px solid rgba(255,255,255,0.1); position: sticky; top: 0; z-index: 100; }
-    header img { height: 60px; }
-    nav a { margin-left: 25px; font-weight: 500; transition: 0.3s; }
-    nav a:hover { color: #00e0ff; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    /* Hero */
-    .hero { text-align: center; padding: 160px 20px; background: url('hero.jpg') center/cover no-repeat fixed; color: white; text-shadow: 0 4px 30px rgba(0,0,0,0.5); position: relative; overflow: hidden; }
-    .hero h1 { font-size: 4rem; font-weight: 800; margin-bottom: 20px; text-shadow: 0 0 20px #00e0ff; }
-    .hero p { font-size: 1.5rem; opacity: 0.9; margin-bottom: 40px; }
-    .hero .cta { padding: 15px 35px; background: #00e0ff; color: #0f0f0f; font-weight: 700; border-radius: 12px; transition: 0.3s; box-shadow: 0 0 20px #00e0ff; }
-    .hero .cta:hover { background: #00c3d9; transform: scale(1.05); box-shadow: 0 0 30px #00e0ff, 0 0 50px #00e0ff; }
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: linear-gradient(180deg, var(--background-dark), var(--background-mid));
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-    /* Hero subtil bakgrundsanimering */
-    .hero::before {
-      content:"";
-      position:absolute;
-      top:0; left:0; width:100%; height:100%;
-      background: radial-gradient(circle, rgba(0,224,255,0.1) 0%, transparent 80%);
-      animation: moveBg 20s linear infinite;
-      z-index:0;
-    }
-    .hero > * { position: relative; z-index:1; }
-    @keyframes moveBg {
-       0% { transform:translateX(0) translateY(0); }
-      50% { transform:translateX(20px) translateY(20px); }
-     100% { transform:translateX(0) translateY(0); }
-    }
+        /* Header och Navigering */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-    /* Sektioner */
-    .section { max-width: 1200px; margin: auto; padding: 80px 40px; }
-    .section h2 { font-size: 2.8rem; margin-bottom: 40px; color: #00e0ff; text-align: center; text-shadow: 0 0 10px #00e0ff; }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-    /* Kort/Grid */
-    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-    .card { background: rgba(255,255,255,0.05); padding: 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(8px); transition: 0.3s; text-align: center; box-shadow: 0 0 10px rgba(0,224,255,0.2); }
-    .card:hover { transform: translateY(-5px) scale(1.03); border-color: #00e0ff; box-shadow: 0 0 20px #00e0ff, 0 0 40px #00e0ff33; }
-    .card img { width: 60px; margin-bottom: 20px; }
-    .card h3 { font-size: 1.6rem; margin-bottom: 15px; }
-    .card p { font-size: 1rem; opacity: 0.85; }
+        .logo-container img {
+            height: 40px; /* Mindre logga i navbaren */
+            filter: drop-shadow(0 0 5px rgba(0, 224, 255, 0.5));
+        }
 
-    /* Priser */
-    .pricing { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
-    .pricing .card { border: 2px solid rgba(0,224,255,0.5); transition: 0.3s; }
-    .pricing .card.popular { border-color: #00e0ff; background: rgba(0,224,255,0.1); }
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+            color: var(--text-light);
+        }
 
-    /* Kundrecensioner */
-    .testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-    .testimonial { background: rgba(255,255,255,0.05); padding: 25px; border-radius: 15px; backdrop-filter: blur(6px); transition: 0.3s; box-shadow: 0 0 10px rgba(0,224,255,0.2); }
-    .testimonial:hover { transform: translateY(-5px); border-color: #00e0ff; box-shadow: 0 0 20px #00e0ff; }
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-top: 2px;
+        }
 
-    /* Footer */
-    footer { background: rgba(0,0,0,0.5); padding: 40px 60px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; }
-    footer a { color: #00e0ff; margin: 0 10px; transition: 0.3s; }
-    footer a:hover { color: #00c3d9; }
+        nav a {
+            margin-left: 25px;
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            transition: 0.3s;
+            padding: 5px 0;
+        }
 
-    /* Chatbot */
-    #chatbot { position: fixed; bottom: 20px; right: 20px; background:#00e0ff; color:#0f0f0f; padding:15px; border-radius:50%; cursor:pointer; font-size:1.5rem; box-shadow:0 5px 15px rgba(0,224,255,0.4); transition:0.3s; }
-    #chatbot:hover { transform:scale(1.1); box-shadow:0 0 30px #00e0ff, 0 0 50px #00e0ff33; }
+        nav a:hover {
+            color: var(--primary-color);
+        }
+        
+        .login-btn {
+            background: var(--primary-color);
+            color: var(--background-dark);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .login-btn:hover {
+            background: #00b3cc;
+            color: var(--background-dark);
+        }
 
-    /* Animation */
-    .fade-in { opacity: 0; transform: translateY(20px); animation: fadeInUp 1s forwards; }
-    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-  </style>
+        /* Hero-sektionen */
+        .hero {
+            text-align: center;
+            padding: 180px 20px;
+            /* Simulera bakgrundsbilden */
+            background-color: var(--background-dark);
+            background-image: linear-gradient(rgba(15, 15, 15, 0.7), rgba(15, 15, 15, 0.9)), url('hero-placeholder.jpg'); 
+            background-size: cover;
+            background-position: center;
+            border-bottom: 5px solid var(--primary-color);
+        }
+        
+        /* Enkla CSS-nycklar för att få bilden att se ut som i designen */
+        .hero {
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(15, 15, 15, 0.1) 0%, rgba(15, 15, 15, 1) 100%);
+            z-index: 1;
+        }
+        .hero > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -2px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.7);
+        }
+        
+        .hero h1 span {
+            color: var(--primary-color);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--primary-color);
+            color: var(--background-dark);
+            padding: 15px 35px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 700;
+            transition: 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 224, 255, 0.4);
+        }
+
+        .cta-button:hover {
+            background: #00b3cc;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0, 224, 255, 0.6);
+        }
+
+        /* Allmän sektionsstil */
+        .section {
+            max-width: 1200px;
+            margin: auto;
+            padding: 100px 40px;
+            text-align: center;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            letter-spacing: -1px;
+        }
+        
+        .section p {
+            font-size: 1.15rem;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+            opacity: 0.85;
+        }
+
+        /* Prispaket */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+            text-align: left;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(8px);
+            transition: 0.4s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-height: 350px;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 30px rgba(0, 224, 255, 0.15);
+        }
+        
+        .card h3 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .price {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--text-light);
+        }
+
+        .card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .card ul li {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            opacity: 0.9;
+        }
+
+        .card ul li::before {
+            content: '✓';
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: var(--background-dark);
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+        
+        .card .contact-link {
+            display: block;
+            margin-top: 30px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--background-dark);
+            background: var(--primary-color);
+            padding: 12px 0;
+            border-radius: 8px;
+            font-weight: 700;
+            transition: background 0.3s;
+        }
+        
+        .card .contact-link:hover {
+            background: #00b3cc;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--background-dark);
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+        
+        /* CTA-sektionen */
+        .cta-section {
+            padding-bottom: 100px;
+            text-align: center;
+        }
+        
+        .cta-section .cta-button {
+            margin-top: 20px;
+            /* Använd samma knappstil som i hero-sektionen */
+        }
+        
+        /* Chatbot Overlay (Föredrar att behålla din stil för enkelhetens skull) */
+        #chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 320px;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid var(--primary-color);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
+            z-index: 1000;
+        }
+
+        #chatbot h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            text-align: center;
+            font-size: 1.4rem;
+        }
+
+        #chatlog {
+            height: 150px;
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+        
+        #chatlog p {
+            margin: 5px 0;
+            line-height: 1.4;
+            opacity: 0.9;
+        }
+
+        #chatInput {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--background-dark);
+            color: var(--text-light);
+            outline: none;
+        }
+        
+        #chatInput::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Responsivitet */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 20px;
+            }
+            nav {
+                margin-top: 15px;
+            }
+            .hero h1 {
+                font-size: 3rem;
+            }
+            .hero p {
+                font-size: 1.2rem;
+            }
+            .section {
+                padding: 60px 20px;
+            }
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <div class="logo-container">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzMiIGhlaWdodD0iNTYiIHZpZXdCb3g9IjAgMCA3MyA1NiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNNTQuOTg3MiAzNy43MjAzTDYyLjk1NTYgNDUuNjk2QzY0LjAzNTYgNDYuNzg2IDY1LjQwNTYgNDcuMzI1MyA2Ny4xNDk5IDQ3LjMyNTNDNjguOTAzOSA0Ny4zMjUzIDcwLjQ3NjYgNDYuODAzNiA3Mi4xMjkzIDQ1LjU5MzNMMzYuMjA2MyAwTDU0Ljk4NzIgMzcuNzIwM1oiIGZpbGw9IiMwMUUwRkYiLz4KICA8cGF0aCBkPSJNMzYgMTguNDQ2N0wwLjAyODE5NTcgNDYuOTc4QzEuNjQxMjUgNDguMDYzNSA0LjI3ODEzIDQ4LjYyMjggNi4wNDM0MiA0OC42MjI4QzcuODA4NzEgNDguNjIyOCA5LjQyOTQ4IDQ4LjA5MTUgMTEuMDQyNiA0Ni45Nzg0TDI2Ljk1MzMgMzEuMDQ2N0wzNiAxOC40NDY3WiIgZmlsbD0iIzAwRTBGRiIvPgogIDxwYXRoIGQ9Ik0xMS41ODYyIDM1LjY1MzRMMC4wMjgwMTA1IDQ3LjEyMzJDMi41MTI4NyA1My4yMjEgOS45NzA4NyA1NS43MTI2IDE4LjI5NTggNTUuNzEyNkM0MS4wNTgxIDU1LjcxMjYgNjUuNzA0OSA0MS4yODUyIDczLjAwODcgMzkuNDUwNUwzNiAxMC45NzY3TTE2LjIzMzMgMzkuNDYwN0wxOC43OTU4IDQxLjY0NjZDMjAuMjg2MiA0Mi42MjE5IDIyLjUzMTQgNDMuMTY2MyAyNC41NTI0IDQzLjE2NjNDMjguNjY5OSA0My4xNjYzIDMzLjE0NzUgNDAuMzg5OSAzNiAzNi44MzI1TDUwLjczMDggNDkuMzc3M0w1Ni42Nzg5IDU0LjQzMjdDMzMuNzQ1MiA0My45NjQ1IDE4Ljg2OTYgNDYuNjk5NSAxMS41ODYyIDM1LjY1MzRaIiBmaWxsPSIjRTRFNENGJi8+Cjwvc3ZnPg==" alt="AutoSocial Media Logo">
+            <div class="logo-text">
+                <h1>AutoSocial Media</h1>
+                <p>Innehåll som skapar kunder – automatiserat med AI.</p>
+            </div>
+        </div>
+        <nav>
+            <a href="#about">Vad vi gör</a>
+            <a href="#pricing">Paket</a>
+            <a href="#contact">Kontakt</a>
+            <a href="#" class="login-btn">Logga in</a>
+        </nav>
+    </header>
 
-<header>
-  <img src="logo.png" alt="Logo">
-  <nav>
-    <a href="#features">Fördelar</a>
-    <a href="#pricing">Priser</a>
-    <a href="#testimonials">Recensioner</a>
-    <a href="#contact">Kontakt</a>
-  </nav>
-</header>
-
-<section class="hero">
-  <h1>Skapa produkter som verkligen engagerar</h1>
-  <p>Vi tar dina idéer till nästa nivå med stilren design och smarta lösningar</p>
-  <a href="#contact" class="cta">Boka möte</a>
-</section>
-
-<section id="features" class="section">
-  <h2>Varför välja oss?</h2>
-  <div class="card-grid">
-    <div class="card fade-in">
-      <img src="icon1.png" alt="">
-      <h3>Innovativ design</h3>
-      <p>Vi skapar produkter som sticker ut och fångar uppmärksamhet.</p>
+    <div class="hero">
+        <h1>Skapa Tillväxt. <span>Automatisk.</span></h1>
+        <p>Innehåll som skapar kunder – automatiserat med AI.</p>
+        <a href="#pricing" class="cta-button">Se Våra Paket</a>
     </div>
-    <div class="card fade-in">
-      <img src="icon2.png" alt="">
-      <h3>Hög kvalitet</h3>
-      <p>Varje produkt är byggd med noggrant utvalda komponenter och lösningar.</p>
-    </div>
-    <div class="card fade-in">
-      <img src="icon3.png" alt="">
-      <h3>Snabb leverans</h3>
-      <p>Vi arbetar effektivt för att leverera resultat inom tidsramen.</p>
-    </div>
-  </div>
-</section>
 
-<section id="pricing" class="section">
-  <h2>Våra paket</h2>
-  <div class="pricing">
-    <div class="card fade-in">
-      <h3>Basic</h3>
-      <p>Grundläggande funktioner och stöd.</p>
-      <p><strong>€99 / månad</strong></p>
+    <div class="section" id="about">
+        <h2>Vad vi gör</h2>
+        <p>Vi hjälper småföretag att växa genom att skapa och publicera **professionellt, kunddrivet innehåll** med hjälp av AI. Ni slipper stressen med sociala medier – **vi sköter allt åt er**.</p>
     </div>
-    <div class="card popular fade-in">
-      <h3>Standard</h3>
-      <p>Full funktionalitet med premium-support.</p>
-      <p><strong>€199 / månad</strong></p>
+
+    <div class="section" id="pricing">
+        <h2>Våra Prispaket</h2>
+        <p>Välj det paket som bäst passar era tillväxtmål. Alla paket drivs av vår banbrytande AI-teknik.</p>
+        <div class="pricing-grid">
+            
+            <div class="card">
+                <h3>Start</h3>
+                <div class="price">2 500 kr/mån</div>
+                <ul>
+                    <li>8 inlägg/månad (bilder/text)</li>
+                    <li>1 kortvideo/vecka (Reels/TikTok)</li>
+                    <li>Automatiserad publicering</li>
+                    <li>Lämpligt för stabil basnärvaro</li>
+                </ul>
+                <a href="mailto:kontakt@autosocialmedia.se?subject=Förfrågan om Startpaket" class="contact-link">Kom igång</a>
+            </div>
+
+            <div class="card">
+                <div class="badge">MEST SÅLD</div>
+                <h3>Pro</h3>
+                <div class="price">4 900 kr/mån</div>
+                <ul>
+                    <li>12–16 inlägg/månad (hög frekvens)</li>
+                    <li>2–4 videos/vecka (hög räckvidd)</li>
+                    <li>Månatlig innehållsplan (överblick)</li>
+                    <li>Optimering (hashtags, tidpunkt)</li>
+                    <li>Perfekt för snabb tillväxt</li>
+                </ul>
+                <a href="mailto:kontakt@autosocialmedia.se?subject=Förfrågan om Pro-paket" class="contact-link">Börja Växa</a>
+            </div>
+
+            <div class="card">
+                <h3>Premium</h3>
+                <div class="price">8 900 kr/mån</div>
+                <ul>
+                    <li>4–8 videos/vecka (maximerad exponering)</li>
+                    <li>Obegränsat antal inlägg (efter behov)</li>
+                    <li>Full Strategi (målgruppsanalys ingår)</li>
+                    <li>Prioriterad Support (24/7)</li>
+                    <li>För aggressiv marknadsdominans</li>
+                </ul>
+                <a href="mailto:kontakt@autosocialmedia.se?subject=Förfrågan om Premium-paket" class="contact-link">Maximera ROI</a>
+            </div>
+            
+        </div>
     </div>
-    <div class="card fade-in">
-      <h3>Premium</h3>
-      <p>Allt i Standard + skräddarsydda lösningar.</p>
-      <p><strong>€299 / månad</strong></p>
+
+    <div class="section cta-section" id="contact">
+        <h2>Redo att Automatisera din Tillväxt?</h2>
+        <p>Kontakta oss för att få ett **GRATIS exempelinlägg** skapat specifikt för ditt företag och se potentialen med AutoSocial Media.</p>
+        <a href="mailto:kontakt@autosocialmedia.se" class="cta-button">Kontakta oss idag</a>
     </div>
-  </div>
-</section>
 
-<section id="testimonials" class="section">
-  <h2>Kundrecensioner</h2>
-  <div class="testimonials">
-    <div class="testimonial fade-in">
-      <p>“Otrolig service och fantastiska produkter – rekommenderas varmt!”</p>
-      <strong>- Anna S.</strong>
+    <footer>
+        <p>© 2025 AutoSocial Media – Alla rättigheter förbehållna</p>
+    </footer>
+    
+    <div id="chatbot">
+        <h3>🤖 AutoSocial Chatbot</h3>
+        <div id="chatlog">
+            <p><strong>Bot:</strong> Välkommen! Vad kan jag hjälpa dig med idag?</p>
+        </div>
+        <input id="chatInput" type="text" placeholder="Ställ en fråga..." />
     </div>
-    <div class="testimonial fade-in">
-      <p>“Proffsigt team som levererade mer än vi förväntade oss.”</p>
-      <strong>- Johan L.</strong>
-    </div>
-    <div class="testimonial fade-in">
-      <p>“Vi älskar designen och hur lätt allt fungerar.”</p>
-      <strong>- Maria K.</strong>
-    </div>
-  </div>
-</section>
 
-<footer id="contact">
-  <p>Kontakt: info@autosocialmedia.com | +46 70 123 45 67</p>
-  <p>
-    <a href="#">LinkedIn</a> |
-    <a href="#">Twitter</a> |
-    <a href="#">Instagram</a>
-  </p>
-  <p>&copy; 2025 AutoSocial Media</p>
-</footer>
+    <script>
+        const qa = {
+          "vad erbjuder ni": "Vi erbjuder automatiserad innehållshantering, AI‑skapade inlägg och full service för företag som vill växa på sociala medier.",
+          "vad kostar det": "Våra paket startar från 2 500 kr/mån. Det mest populära paketet (Pro) kostar 4 900 kr/mån.",
+          "hur kontaktar jag er": "Du kan enkelt maila oss på kontakt@autosocialmedia.se, eller fylla i vårt kontaktformulär.",
+          "vad är autosocial": "AutoSocial Media är ett företag som automatiserar hanteringen av sociala medier, skapar kunddrivet innehåll och hjälper företag att växa online med hjälp av AI.",
+          "har ni kundsupport": "Ja! Vi erbjuder prioriterad support 24/7 för våra premiumkunder.",
+          "kan ni skapa content": "Ja, vi skapar reels, bilder, captions och planerar hela flödet automatiskt baserat på en strategi."
+        };
 
-<div id="chatbot">💬</div>
+        function chatbotAnswer(q) {
+          q = q.toLowerCase();
+          for (let key in qa) {
+            if (q.includes(key)) return qa[key];
+          }
+          return "Jag är inte helt säker på det än. Skicka gärna ett mail till oss på kontakt@autosocialmedia.se så hjälper vårt team dig!";
+        }
 
-<script>
-  // Scroll-animation för kort och testimonials
-  const cards = document.querySelectorAll('.fade-in, .testimonial');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting) {
-        entry.target.style.opacity = 1;
-        entry.target.style.transform = 'translateY(0)';
-      }
-    });
-  }, { threshold: 0.2 });
-  cards.forEach(card => observer.observe(card));
+        document.getElementById('chatInput').addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            const input = this.value.trim();
+            if (!input) return;
 
-  // Enkel chatbot popup
-  const chatbot = document.getElementById('chatbot');
-  chatbot.addEventListener('click', () => {
-    alert('Hej! Hur kan vi hjälpa dig idag? 💬');
-  });
-</script>
+            const log = document.getElementById('chatlog');
+            log.innerHTML += `<p><strong>Du:</strong> ${input}</p>`;
+            
+            // Simulerar kort fördröjning för bot-svar
+            setTimeout(() => {
+                const response = chatbotAnswer(input);
+                log.innerHTML += `<p><strong>Bot:</strong> ${response}</p>`;
+                log.scrollTop = log.scrollHeight; // Scrolla ner
+            }, 300);
 
+            this.value = "";
+          }
+        });
+    </script>
 </body>
 </html>
