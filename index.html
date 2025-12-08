@@ -1,522 +1,74 @@
 <!DOCTYPE html>
-<html lang="sv">
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AutoSocial Media – Innehåll som skapar kunder</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <style>
-        /* Globala Stilar */
-        :root {
-            --primary-color: #00e0ff; /* Starkt blå/cyan för accent */
-            --background-dark: #0f0f0f; /* Huvudbakgrund */
-            --background-mid: #1a1a1a; /* Section bakgrund */
-            --text-light: #e4e4e4;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --border-color: rgba(255, 255, 255, 0.1);
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name | .NET Developer Portfolio</title>
+    
+    <link rel="stylesheet" href="style.css">
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Inter', system-ui, sans-serif;
-            background: linear-gradient(180deg, var(--background-dark), var(--background-mid));
-            color: var(--text-light);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* Header och Navigering */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 60px;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo-container img {
-            height: 40px; /* Mindre logga i navbaren */
-            /* Applicerar en neon-liknande skugga för att matcha designen */
-            filter: drop-shadow(0 0 5px rgba(0, 224, 255, 0.5)); 
-        }
-
-        .logo-text h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 0;
-            color: var(--text-light);
-        }
-
-        .logo-text p {
-            font-size: 0.8rem;
-            opacity: 0.7;
-            margin-top: 2px;
-        }
-
-        nav a {
-            margin-left: 25px;
-            text-decoration: none;
-            color: var(--text-light);
-            font-weight: 500;
-            transition: 0.3s;
-            padding: 5px 0;
-        }
-
-        nav a:hover {
-            color: var(--primary-color);
-        }
-        
-        .login-btn {
-            background: var(--primary-color);
-            color: var(--background-dark);
-            padding: 8px 15px;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: background 0.3s;
-        }
-        
-        .login-btn:hover {
-            background: #00b3cc;
-            color: var(--background-dark);
-        }
-
-        /* Hero-sektionen */
-        .hero {
-            text-align: center;
-            padding: 180px 20px;
-            /* Du måste ersätta 'hero-placeholder.jpg' med din egen bakgrundsbild. */
-            background-color: var(--background-dark);
-            background-image: linear-gradient(rgba(15, 15, 15, 0.7), rgba(15, 15, 15, 0.9)), url('hero-placeholder.jpg'); 
-            background-size: cover;
-            background-position: center;
-            border-bottom: 5px solid var(--primary-color);
-        }
-        
-        /* Enkla CSS-nycklar för att få bilden att se ut som i designen */
-        .hero {
-            position: relative;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            /* Ljusar upp i toppen och mörknar i botten för att matcha det mörka temat */
-            background: linear-gradient(180deg, rgba(15, 15, 15, 0.1) 0%, rgba(15, 15, 15, 1) 100%);
-            z-index: 1;
-        }
-        .hero > * {
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: 4.5rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-            letter-spacing: -2px;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.7);
-        }
-        
-        .hero h1 span {
-            color: var(--primary-color);
-        }
-
-        .hero p {
-            font-size: 1.5rem;
-            opacity: 0.9;
-            margin-bottom: 40px;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: var(--primary-color);
-            color: var(--background-dark);
-            padding: 15px 35px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-size: 1.2rem;
-            font-weight: 700;
-            transition: 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 224, 255, 0.4);
-        }
-
-        .cta-button:hover {
-            background: #00b3cc;
-            transform: translateY(-2px);
-            box-shadow: 0 7px 20px rgba(0, 224, 255, 0.6);
-        }
-
-        /* Allmän sektionsstil */
-        .section {
-            max-width: 1200px;
-            margin: auto;
-            padding: 100px 40px;
-            text-align: center;
-        }
-
-        .section h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            color: var(--primary-color);
-            letter-spacing: -1px;
-        }
-        
-        .section p {
-            font-size: 1.15rem;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto 50px auto;
-            opacity: 0.85;
-        }
-
-        /* Prispaket */
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-            text-align: left;
-        }
-
-        .card {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
-            backdrop-filter: blur(8px);
-            transition: 0.4s ease;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            min-height: 350px;
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            border-color: var(--primary-color);
-            box-shadow: 0 10px 30px rgba(0, 224, 255, 0.15);
-        }
-        
-        .card h3 {
-            font-size: 1.8rem;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-        
-        .price {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 25px;
-            color: var(--text-light);
-        }
-
-        .card ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            flex-grow: 1;
-        }
-
-        .card ul li {
-            margin-bottom: 15px;
-            font-size: 1.05rem;
-            display: flex;
-            align-items: center;
-            opacity: 0.9;
-        }
-
-        .card ul li::before {
-            content: '✓';
-            color: var(--primary-color);
-            font-weight: 700;
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-        
-        .badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: var(--primary-color);
-            color: var(--background-dark);
-            padding: 5px 15px;
-            border-radius: 15px;
-            font-weight: 700;
-            font-size: 0.85rem;
-        }
-        
-        .card .contact-link {
-            display: block;
-            margin-top: 30px;
-            text-align: center;
-            text-decoration: none;
-            color: var(--background-dark);
-            background: var(--primary-color);
-            padding: 12px 0;
-            border-radius: 8px;
-            font-weight: 700;
-            transition: background 0.3s;
-        }
-        
-        .card .contact-link:hover {
-            background: #00b3cc;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            background: var(--background-dark);
-            border-top: 1px solid var(--border-color);
-            font-size: 0.9rem;
-            opacity: 0.6;
-        }
-        
-        /* CTA-sektionen */
-        .cta-section {
-            padding-bottom: 100px;
-            text-align: center;
-        }
-        
-        .cta-section .cta-button {
-            margin-top: 20px;
-            /* Använd samma knappstil som i hero-sektionen */
-        }
-        
-        /* Chatbot Overlay */
-        #chatbot {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 320px;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 20px;
-            /* Matchar accentfärgen */
-            border: 1px solid var(--primary-color); 
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-            color: var(--text-light);
-            font-family: 'Inter', sans-serif;
-            z-index: 1000;
-        }
-
-        #chatbot h3 {
-            margin-top: 0;
-            color: var(--primary-color);
-            text-align: center;
-            font-size: 1.4rem;
-        }
-
-        #chatlog {
-            height: 150px;
-            overflow-y: auto;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid var(--border-color);
-            font-size: 0.9rem;
-        }
-        
-        #chatlog p {
-            margin: 5px 0;
-            line-height: 1.4;
-            opacity: 0.9;
-        }
-
-        #chatlog strong {
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-
-        #chatInput {
-            width: 100%;
-            padding: 10px;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            background: var(--background-dark);
-            color: var(--text-light);
-            outline: none;
-        }
-        
-        #chatInput::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        /* Responsivitet */
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                padding: 20px;
-            }
-            nav {
-                margin-top: 15px;
-            }
-            .hero h1 {
-                font-size: 3rem;
-            }
-            .hero p {
-                font-size: 1.2rem;
-            }
-            .section {
-                padding: 60px 20px;
-            }
-            .pricing-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <div class="logo-container">
-            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzMiIGhlaWdodD0iNTYiIHZpZXdCb3g9IjAgMCA3MyA1NiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNNTQuOTg3MiAzNy43MjAzTDYyLjk1NTYgNDUuNjk2QzY0LjAzNTYgNDYuNzg2IDY1LjQwNTYgNDcuMzI1MyA2Ny4xNDk5IDQ3LjMyNTNDNjguOTAzOSA0Ny4zMjUzIDcwLjQ3NjYgNDYuODAzNiA3Mi4xMjkzIDQ1LjU5MzNMMzYuMjA2MyAwTDU0Ljk4NzIgMzcuNzIwM1oiIGZpbGw9IiMwMUUwRkYiLz4KICA8cGF0aCBkPSJNMzYgMTguNDQ2N0wwLjAyODE5NTcgNDYuOTc4QzEuNjQxMjUgNDguMDYzNSA0LjI3ODEzIDQ4LjYyMjggNi4wNDM0MiA0OC42MjI4QzcuODA4NzEgNDguNjIyOCA5LjQyOTQ4IDQ4LjA5MTUgMTEuMDQyNiA0Ni45Nzg0TDI2Ljk1MzMgMzEuMDQ2N0wzNiAxOC40NDY3WiIgZmlsbD0iIzAwRTBGRiIvPgogIDxwYXRoIGQ9Ik0xMS41ODYyIDM1LjY1MzRMMC4wMjgwMTA1IDQ3LjEyMzJDMi41MTI4NyA1My4yMjEgOS45NzA4NyA1NS43MTI2IDE4LjI5NTggNTUuNzEyNkM0MS4wNTgxIDU1LjcxMjYgNjUuNzA0OSA0MS4yODUyIDczLjAwODcgMzkuNDUwNUwzNiAxMC45NzY3TTE2LjIzMzMgMzkuNDYwN0wxOC43OTU4IDQxLjY0NjZDMjAuMjg2MiA0Mi42MjE5IDIyLjUzMTQgNDMuMTY2MyAyNC41NTI0IDQzLjE2NjNDMjguNjY5OSA0My4xNjYzIDMzLjE0NzUgNDAuMzg5OSAzNiAzNi44MzI1TDUwLjczMDggNDkuMzc3M0w1Ni42Nzg5IDU0LjQzMjdDMzMuNzQ1MiA0My45NjQ1IDE4Ljg2OTYgNDYuNjk5NSAxMS41ODYyIDM1LjY1MzRaIiBmaWxsPSIjRTRFNENGIi8+Cjwvc3ZnPg==" alt="AutoSocial Media Logo">
-            <div class="logo-text">
-                <h1>AutoSocial Media</h1>
-                <p>Innehåll som skapar kunder – automatiserat med AI.</p>
-            </div>
-        </div>
+    <header class="main-header">
         <nav>
-            <a href="#about">Vad vi gör</a>
-            <a href="#pricing">Paket</a>
-            <a href="#contact">Kontakt</a>
-            <a href="#" class="login-btn">Logga in</a>
+            <a href="#home" class="logo">YourName</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="mailto:your.email@example.com" class="contact-btn">Contact</a></li>
+            </ul>
         </nav>
     </header>
 
-    <div class="hero">
-        <h1>Skapa Tillväxt. <span>Automatisk.</span></h1>
-        <p>Innehåll som skapar kunder – automatiserat med AI.</p>
-        <a href="#pricing" class="cta-button">Se Våra Paket</a>
-    </div>
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Hello, I'm **[Your Name]**</h1>
+            <h2>Aspiring .NET Developer & Game Dev Enthusiast</h2>
+            <p>Currently mastering C# and ASP.NET Core with a focus on clean architecture and performance optimization.</p>
+            <div class="social-links">
+                <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+                <a href="https://linkedin.com/in/yourusername" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+    </section>
 
-    <div class="section" id="about">
-        <h2>Vad vi gör</h2>
-        <p>Vi hjälper småföretag att växa genom att skapa och publicera **professionellt, kunddrivet innehåll** med hjälp av AI. Ni slipper stressen med sociala medier – **vi sköter allt åt er**.</p>
-    </div>
-
-    <div class="section" id="pricing">
-        <h2>Våra Prispaket</h2>
-        <p>Välj det paket som bäst passar era tillväxtmål. Alla paket drivs av vår banbrytande AI-teknik.</p>
-        <div class="pricing-grid">
+    <section id="projects" class="projects">
+        <h2>Featured Projects</h2>
+        <div class="project-grid">
             
-            <div class="card">
-                <h3>Start</h3>
-                <div class="price">2 500 kr/mån</div>
-                <ul>
-                    <li>8 inlägg/månad (bilder/text)</li>
-                    <li>1 kortvideo/vecka (Reels/TikTok)</li>
-                    <li>Automatiserad publicering</li>
-                    <li>Lämpligt för stabil basnärvaro</li>
-                </ul>
-                <a href="mailto:kontakt@autosocialmedia.se?subject=Förfrågan om Startpaket" class="contact-link">Kom igång</a>
+            <div class="project-card">
+                <h3>Project Name 1 (e.g., Simple Task Manager API)</h3>
+                <p>A C# .NET Core Web API built to manage tasks. Demonstrates understanding of REST principles and Entity Framework.</p>
+                <p class="tech-stack">**Tech Used:** C#, ASP.NET Core, SQL Server</p>
+                <a href="https://github.com/yourusername/project1" target="_blank" class="repo-link">View Repository</a>
             </div>
 
-            <div class="card">
-                <div class="badge">MEST SÅLD</div>
-                <h3>Pro</h3>
-                <div class="price">4 900 kr/mån</div>
-                <ul>
-                    <li>12–16 inlägg/månad (hög frekvens)</li>
-                    <li>2–4 videos/vecka (hög räckvidd)</li>
-                    <li>Månatlig innehållsplan (överblick)</li>
-                    <li>Optimering (hashtags, tidpunkt)</li>
-                    <li>Perfekt för snabb tillväxt</li>
-                </ul>
-                <a href="mailto:kontakt@autosocialmedia.se?subject=Förfrågan om Pro-paket" class="contact-link">Börja Växa</a>
-            </div>
-
-            <div class="card">
-                <h3>Premium</h3>
-                <div class="price">8 900 kr/mån</div>
-                <ul>
-                    <li>4–8 videos/vecka (maximerad exponering)</li>
-                    <li>Obegränsat antal inlägg (efter behov)</li>
-                    <li>Full Strategi (målgruppsanalys ingår)</li>
-                    <li>Prioriterad Support (24/7)</li>
-                    <li>För aggressiv marknadsdominans</li>
-                </ul>
-                <a href="mailto:kontakt@autosocialmedia.se?subject=Förfrågan om Premium-paket" class="contact-link">Maximera ROI</a>
+            <div class="project-card">
+                <h3>Project Name 2 (e.g., Unity 2D Platformer)</h3>
+                <p>A small game prototype developed in Unity. Showcases C# scripting skills and game logic development.</p>
+                <p class="tech-stack">**Tech Used:** C#, Unity, Git</p>
+                <a href="https://github.com/yourusername/project2" target="_blank" class="repo-link">View Repository</a>
             </div>
             
         </div>
-    </div>
+    </section>
 
-    <div class="section cta-section" id="contact">
-        <h2>Redo att Automatisera din Tillväxt?</h2>
-        <p>Kontakta oss för att få ett **GRATIS exempelinlägg** skapat specifikt för ditt företag och se potentialen med AutoSocial Media.</p>
-        <a href="mailto:kontakt@autosocialmedia.se" class="cta-button">Kontakta oss idag</a>
-    </div>
+    <section id="skills" class="skills">
+        <h2>Skills & Technologies</h2>
+        <div class="skills-list">
+            <span>C#</span>
+            <span>.NET Core / ASP.NET Core</span>
+            <span>Unity</span>
+            <span>HTML & CSS</span>
+            <span>SQL / Entity Framework</span>
+            <span>Git / GitHub</span>
+            </div>
+    </section>
 
     <footer>
-        <p>© 2025 AutoSocial Media – Alla rättigheter förbehållna</p>
+        <p>&copy; 2025 [Your Name]. Built with HTML/CSS and Hosted on GitHub Pages.</p>
     </footer>
-    
-    <div id="chatbot">
-        <h3>🤖 AutoSocial Chatbot</h3>
-        <div id="chatlog">
-            <p><strong>Bot:</strong> Välkommen! Vad kan jag hjälpa dig med idag?</p>
-        </div>
-        <input id="chatInput" type="text" placeholder="Ställ en fråga..." />
-    </div>
-
-    <script>
-        const qa = {
-          "vad erbjuder ni": "Vi erbjuder automatiserad innehållshantering, AI‑skapade inlägg och full service för företag som vill växa på sociala medier.",
-          "vad kostar det": "Våra paket startar från 2 500 kr/mån. Det mest populära paketet (Pro) kostar 4 900 kr/mån.",
-          "hur kontaktar jag er": "Du kan enkelt maila oss på kontakt@autosocialmedia.se, eller fylla i vårt kontaktformulär.",
-          "vad är autosocial": "AutoSocial Media är ett företag som automatiserar hanteringen av sociala medier, skapar kunddrivet innehåll och hjälper företag att växa online med hjälp av AI.",
-          "har ni kundsupport": "Ja! Vi erbjuder prioriterad support 24/7 för våra premiumkunder.",
-          "kan ni skapa content": "Ja, vi skapar reels, bilder, captions och planerar hela flödet automatiskt baserat på en strategi."
-        };
-
-        function chatbotAnswer(q) {
-          q = q.toLowerCase();
-          for (let key in qa) {
-            if (q.includes(key)) return qa[key];
-          }
-          return "Jag är inte helt säker på det än. Skicka gärna ett mail till oss på kontakt@autosocialmedia.se så hjälper vårt team dig!";
-        }
-
-        document.getElementById('chatInput').addEventListener('keydown', function(e) {
-          if (e.key === 'Enter') {
-            const input = this.value.trim();
-            if (!input) return;
-
-            const log = document.getElementById('chatlog');
-            log.innerHTML += `<p><strong>Du:</strong> ${input}</p>`;
-            
-            // Simulerar kort fördröjning för bot-svar
-            setTimeout(() => {
-                const response = chatbotAnswer(input);
-                log.innerHTML += `<p><strong>Bot:</strong> ${response}</p>`;
-                log.scrollTop = log.scrollHeight; // Scrolla ner
-            }, 300);
-
-            this.value = "";
-          }
-        });
-    </script>
 </body>
 </html>
